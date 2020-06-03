@@ -1,6 +1,6 @@
 #include "binary_tree.h"
 
-Tree_ptr create_tree(value){
+Tree_ptr create_tree(int value){
   Tree_ptr tree = (Tree_ptr) malloc(sizeof(Tree));
   tree->value = value;
   tree->left = NULL;
@@ -71,8 +71,8 @@ Tree_ptr find_min(Tree_ptr node)
   return current; 
 } 
 
-Tree_ptr delete_node(Tree_ptr tree, int value){
-
+Tree_ptr delete_node(Tree_ptr tree, int value)
+{
   Tree_ptr_to_ptr current = &tree;
   while (*current && (*current)->value != value)
   {
@@ -108,3 +108,23 @@ Tree_ptr delete_node(Tree_ptr tree, int value){
   }
   return tree;
 }
+
+Tree_ptr right_rotate(Tree_ptr tree)
+{
+  Tree_ptr root = tree;
+  Tree_ptr pivot = root->left;
+  root->left = pivot->right;
+  pivot->right = root;
+  return pivot;
+}
+
+Tree_ptr left_rotate(Tree_ptr tree)
+{
+  Tree_ptr root = tree;
+  Tree_ptr pivot = root->right;
+  root->right = pivot->left;
+  pivot->left = root;
+  return pivot;
+}
+
+

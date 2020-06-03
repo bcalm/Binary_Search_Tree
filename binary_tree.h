@@ -26,4 +26,6 @@ void print_in_order(Tree_ptr);
 void print_pre_order(Tree_ptr);
 void print_post_order(Tree_ptr);
 Tree_ptr find_min(Tree_ptr);
+Tree_ptr right_rotate(Tree_ptr);
+Tree_ptr left_rotate(Tree_ptr);
 #endif
