@@ -26,7 +26,4 @@ void print_in_order(Tree_ptr);
 void print_pre_order(Tree_ptr);
 void print_post_order(Tree_ptr);
 Tree_ptr find_min(Tree_ptr);
-Tree_ptr deleteNode(Tree_ptr, int);
-Tree_ptr delete(Tree_ptr, int);
-
 #endif
