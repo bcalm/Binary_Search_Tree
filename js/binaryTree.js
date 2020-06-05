@@ -52,7 +52,7 @@ const search = function (tree, value) {
   return search(remainingTree, value);
 };
 
-const iterativePrintInOrder = function (tree, visiter) {
+const visitInOrder = function (tree, visiter) {
   let curr = tree;
   const stack = [];
   while (true) {
@@ -68,7 +68,7 @@ const iterativePrintInOrder = function (tree, visiter) {
   }
 };
 
-const iterativePrintPreOrder = function (tree, visiter) {
+const visitPreOrder = function (tree, visiter) {
   let curr = tree;
   const stack = [];
   stack.push(curr);
@@ -84,7 +84,7 @@ const iterativePrintPreOrder = function (tree, visiter) {
   }
 };
 
-const iterativePrintPostOrder = function (tree, visiter) {
+const visitPostOrder = function (tree, visiter) {
   if (tree == null) return;
   const stack = [];
   do {
@@ -209,4 +209,14 @@ const balance = function (tree) {
   tree.left = balance(tree.left);
   tree.right = balance(tree.right);
   return tree;
+};
+
+module.exports = {
+  balance,
+  deleteNode,
+  insert,
+  visitInOrder,
+  visitPreOrder,
+  visitPostOrder,
+  rotate,
 };
