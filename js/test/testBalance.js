@@ -61,8 +61,8 @@ describe('# Balance', () => {
     };
     assert.deepStrictEqual(actual, expected);
   });
-  it('should balanced the tree when sub tree are balanced', () => {
-    const values = [4, 3, 2, 1, 5, 6, 7];
+  it('should balanced the tree when sub tree are not balanced', () => {
+    const values = [4, 3, 5, 2, 6, 1, 7];
     const tree = values.reduce(insert, null);
     const actual = balance(tree);
     const expected = {

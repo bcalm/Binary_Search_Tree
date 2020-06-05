@@ -14,12 +14,12 @@ describe('# Delete', () => {
     assert.deepStrictEqual(actual, expected);
   });
   it('should delete a sub tree when sub tree has no left child', () => {
-    const values = [10, 20, 15, 25, 5, 8];
+    const values = [10, 20, 25, 5, 8, 1];
     let tree = values.reduce(insert, null);
-    tree = deleteNode(tree, 5);
+    tree = deleteNode(tree, 20);
     const actual = [];
     visitInOrder(tree, actual.push.bind(actual));
-    const expected = [8, 10, 15, 20, 25];
+    const expected = [1, 5, 8, 10, 25];
     assert.deepStrictEqual(actual, expected);
   });
   it('should delete a sub tree when sub tree has no right child', () => {
@@ -54,7 +54,12 @@ describe('# Delete', () => {
     tree = deleteNode(tree, 10);
     const actual = [];
     visitInOrder(tree, actual.push.bind(actual));
-    const expected = null;
+    assert.deepEqual(actual, []);
+  });
+  it('should not delete when tree is null', () => {
+    const tree = deleteNode(null, 10);
+    const actual = [];
+    visitInOrder(tree, actual.push.bind(actual));
     assert.deepEqual(actual, []);
   });
 });
