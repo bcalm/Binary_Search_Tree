@@ -2,7 +2,7 @@ const assert = require('assert');
 const {visitInOrder, visitPreOrder, visitPostOrder} = require('../src/traversal');
 const {insert} = require('../src/insert');
 
-describe('# balance', () => {
+describe('# Traverse', () => {
   describe('## visitInOrder', () => {
     it('should give all the nodes in ascending order', () => {
       const values = [10, 20, 15, 25, 5, 8, 1];

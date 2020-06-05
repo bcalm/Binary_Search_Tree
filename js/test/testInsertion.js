@@ -1,7 +1,7 @@
 const assert = require('assert');
 const {insert} = require('../src/insert');
 
-describe('# insert', () => {
+describe('# Insert', () => {
   it('should insert in the list when list is null', () => {
     const actual = insert(null, 5);
     const expected = {

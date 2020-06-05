@@ -2,7 +2,7 @@ const assert = require('assert');
 const {balance} = require('../src/balance');
 const {insert} = require('../src/insert');
 
-describe('# balance', () => {
+describe('# Balance', () => {
   it('should return the original tree if tree is already balanced', () => {
     const values = [10, 20, 15, 25, 5, 8, 1];
     const tree = values.reduce(insert, null);
