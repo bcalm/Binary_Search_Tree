@@ -35,7 +35,6 @@ void print_post_order(Tree_ptr tree){
   printf("%d  ",tree->value);
 };
 
-
 Tree_ptr insert(Tree_ptr tree, int value) {
   Tree_ptr_to_ptr current = &tree;
   Tree_ptr temp_node = create_tree(value);
@@ -91,40 +90,27 @@ Tree_ptr delete_node(Tree_ptr tree, int value)
     (*current) = (*current)->left;
   } else
   {
-    Tree_ptr parent = (*current);
-    Tree_ptr child = (*current)->right;
-    while (child->left != NULL) { 
-      parent = child; 
-      child = child->left; 
+    Tree_ptr_to_ptr child = &((*current)->right);
+    while ((*child)->left != NULL) { 
+      child = &((*child)->left); 
     } 
-    if (parent != (*current)) {
-      parent->left = child->right; 
-    }
-    else{
-      parent->right = child->right; 
-    }
-    (*current)->value = child->value;
-    free(child);
+    (*current)->value = (*child)->value;
+    Tree_ptr node_to_delete = *child;
+    *child = (*child)->right;
+    free(node_to_delete);
   }
   return tree;
 }
 
-Tree_ptr right_rotate(Tree_ptr tree)
-{
+Tree_ptr rotate(Tree_ptr tree, Tree_ptr pivot){
   Tree_ptr root = tree;
-  Tree_ptr pivot = root->left;
-  root->left = pivot->right;
-  pivot->right = root;
+  if(tree->right == pivot){
+    root->right = pivot->left;
+    pivot->left = root;
+  }
+  if(tree->left== pivot){
+    root->left = pivot->right;
+    pivot->right = root;  
+  }
   return pivot;
 }
-
-Tree_ptr left_rotate(Tree_ptr tree)
-{
-  Tree_ptr root = tree;
-  Tree_ptr pivot = root->right;
-  root->right = pivot->left;
-  pivot->left = root;
-  return pivot;
-}
-
-

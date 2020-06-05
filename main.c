@@ -10,12 +10,7 @@ Tree_ptr reduce(Tree_ptr tree, Int_ptr array, int array_length){
 
 int main(void)
 {
-  int values[] = {10, 20, 5, 8, 1};
-  Tree_ptr tree = reduce(NULL, values, 5);
-  print_in_order(tree);
-  printf("\n-----------------\n");
-  tree = left_rotate(tree);
-  print_in_order(tree);
-  printf("\n-----------------\n");
+  int values[] = {10,15,20,25,5, 8, 1};
+  Tree_ptr tree = reduce(NULL, values, 7);
   return 0;
 }
