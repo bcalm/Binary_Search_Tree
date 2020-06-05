@@ -1,13 +1,6 @@
 const assert = require('assert');
-const {
-  balance,
-  deleteNode,
-  insert,
-  visitInOrder,
-  visitPreOrder,
-  visitPostOrder,
-  rotate,
-} = require('../binaryTree');
+const {balance} = require('../src/balance');
+const {insert} = require('../src/insert');
 
 describe('# balance', () => {
   it('should return the original tree if tree is already balanced', () => {
