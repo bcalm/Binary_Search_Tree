@@ -12,5 +12,6 @@ int main(void)
 {
   int values[] = {10,15,20,25,5, 8, 1};
   Tree_ptr tree = reduce(NULL, values, 7);
+  printf("%d\n", is_balanced(tree));
   return 0;
 }

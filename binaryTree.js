@@ -52,7 +52,7 @@ const search = function (tree, value) {
   return search(remainingTree, value);
 };
 
-const iterativePrintInOrder = function (tree) {
+const iterativePrintInOrder = function (tree, visiter) {
   let curr = tree;
   const stack = [];
   while (true) {
@@ -63,18 +63,18 @@ const iterativePrintInOrder = function (tree) {
 
     if (!stack.length) break;
     curr = stack.pop();
-    console.log(curr.value);
+    visiter(curr.value);
     curr = curr.right;
   }
 };
 
-const iterativePrintPreOrder = function (tree) {
+const iterativePrintPreOrder = function (tree, visiter) {
   let curr = tree;
   const stack = [];
   stack.push(curr);
   while (stack.length) {
     curr = stack.pop();
-    console.log(curr.value);
+    visiter(curr.value);
     if (curr.right) {
       stack.push(curr.right);
     }
@@ -84,7 +84,7 @@ const iterativePrintPreOrder = function (tree) {
   }
 };
 
-const iterativePrintPostOrder = function (tree) {
+const iterativePrintPostOrder = function (tree, visiter) {
   if (tree == null) return;
   const stack = [];
   do {
@@ -101,7 +101,7 @@ const iterativePrintPostOrder = function (tree) {
       stack.push(tree);
       tree = tree.right;
     } else {
-      console.log(tree.value);
+      visiter(tree.value);
       tree = null;
     }
   } while (stack.length);
@@ -138,13 +138,75 @@ const deleteNode = function (tree, value) {
   return tree;
 };
 
-const main = function () {
-  const values = [10, 20, 5, 8, 1, 15, 25];
-  let tree = values.reduce(insert, null);
-  printPreOrder(tree);
-  tree = deleteNode(tree, 10);
-  console.log('-');
-  printPreOrder(tree);
+const calcHeight = function (tree) {
+  if (!tree) return 0;
+  return 1 + Math.max(calcHeight(tree.left), calcHeight(tree.right));
 };
 
-main();
+const isBalanced = function (tree) {
+  if (tree == null) return true;
+  const leftHeight = calcHeight(tree.left);
+  const rightHeight = calcHeight(tree.right);
+  return Math.abs(leftHeight - rightHeight) <= 1 && isBalanced(tree.left) && isBalanced(tree.right);
+};
+
+const leftRotate = function (tree) {
+  if (!tree || !tree.right) {
+    return tree;
+  }
+  const pivot = tree.right;
+  tree.right = pivot.left;
+  pivot.left = tree;
+  return pivot;
+};
+
+const rightRotate = function (tree) {
+  if (!tree || !tree.left) {
+    return tree;
+  }
+  const pivot = tree.left;
+  tree.left = pivot.right;
+  pivot.right = tree;
+  return pivot;
+};
+
+const rotate = function (tree, pivot) {
+  if (tree.right == pivot) {
+    tree = leftRotate(tree);
+  }
+  if (tree.left == pivot) {
+    tree = rightRotate(tree);
+  }
+  return tree;
+};
+
+const balanceTree = function (nodeToBeRoot, tree) {
+  if (tree.value === nodeToBeRoot) {
+    return tree;
+  }
+  if (tree.left && tree.left.value === nodeToBeRoot) {
+    return rotate(tree, tree.left);
+  }
+  if (tree.right && tree.right.value === nodeToBeRoot) {
+    return rotate(tree, tree.right);
+  }
+  if (nodeToBeRoot < tree.value) {
+    tree.left = balanceTree(nodeToBeRoot, tree.left);
+  } else {
+    tree.right = balanceTree(nodeToBeRoot, tree.right);
+  }
+  return balanceTree(nodeToBeRoot, tree);
+};
+
+const balance = function (tree) {
+  if (isBalanced(tree)) {
+    return tree;
+  }
+  const nodes = [];
+  visitInOrder(tree, nodes.push.bind(nodes));
+  const nodeToBeRoot = nodes[Math.ceil(nodes.length / 2) - 1];
+  tree = balanceTree(nodeToBeRoot, tree);
+  tree.left = balance(tree.left);
+  tree.right = balance(tree.right);
+  return tree;
+};

@@ -102,15 +102,52 @@ Tree_ptr delete_node(Tree_ptr tree, int value)
   return tree;
 }
 
-Tree_ptr rotate(Tree_ptr tree, Tree_ptr pivot){
+Tree_ptr right_rotate(Tree_ptr tree)
+{
   Tree_ptr root = tree;
-  if(tree->right == pivot){
-    root->right = pivot->left;
-    pivot->left = root;
-  }
-  if(tree->left== pivot){
-    root->left = pivot->right;
-    pivot->right = root;  
-  }
+  Tree_ptr pivot = root->left;
+  if(pivot == NULL) return tree;
+  root->left = pivot->right;
+  pivot->right = root;
   return pivot;
+}
+
+Tree_ptr left_rotate(Tree_ptr tree)
+{
+  Tree_ptr root = tree;
+  Tree_ptr pivot = root->right;
+  if(pivot == NULL) return tree;
+  root->right = pivot->left;
+  pivot->left = root;
+  return pivot;
+}
+
+Tree_ptr rotate(Tree_ptr tree, int pivot){
+  if(tree->right->value == pivot){
+    tree = left_rotate(tree);
+  }
+  if(tree->left->value == pivot){
+    tree = right_rotate(tree);
+  }
+  return tree;
+}
+
+int max(int num1, int num2){
+  return num1 < num2 ? num2: num1;
+}
+
+int calc_height(Tree_ptr tree){
+  if(tree == NULL) return 0;
+  return 1 + max(calc_height(tree->left), calc_height(tree->right));
+}
+
+Boolean is_balanced(Tree_ptr tree){
+  if(tree==NULL) return True;
+  int left_height = calc_height(tree->left);
+  int right_height = calc_height(tree->right);
+  return abs(left_height - right_height) <= 1;
+}
+
+Tree_ptr balance_tree(Tree_ptr tree){
+  return tree;
 }
