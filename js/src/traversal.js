@@ -91,4 +91,4 @@ const visitPostOrder = function (tree, visiter) {
   } while (stack.length);
 };
 
-module.exports = {visitInOrder, visitPostOrder, visitPostOrder, search};
+module.exports = {visitInOrder, visitPreOrder, visitPostOrder, search};
