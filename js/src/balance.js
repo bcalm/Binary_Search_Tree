@@ -62,12 +62,4 @@ const balanceByCreatingNewTree = function (tree) {
   return buildBalancedTree(nodes, 0, nodes.length - 1);
 };
 
-// const main = function () {
-//   const values = [10, 5, 1, 8, 9, 20];
-//   const tree = values.reduce(insert, null);
-//   const newTree = balanceByCreatingNewTree(tree);
-//   console.log(newTree);
-// };
-
-// main();
 module.exports = {balance, balanceByCreatingNewTree};

@@ -148,6 +148,33 @@ Boolean is_balanced(Tree_ptr tree){
   return abs(left_height - right_height) <= 1;
 }
 
-Tree_ptr balance_tree(Tree_ptr tree){
+Tree_ptr build_balanced_tree(Int_ptr nodes,int start,int end) {
+  if (start > end) {
+    return NULL;
+  }
+  int mid = floor((start + end) / 2);
+  Tree_ptr tree = (Tree_ptr)malloc(sizeof(Tree));
+  tree->value = nodes[mid];
+  tree->left = build_balanced_tree(nodes, start, mid - 1);
+  tree->right = build_balanced_tree(nodes, mid + 1, end);
   return tree;
+};
+
+int store_nodes(Tree_ptr tree, Int_ptr nodes, int no_of_count){
+  if (tree == NULL)
+  {
+    return no_of_count;
+  }
+  no_of_count = store_nodes(tree->left, nodes, no_of_count);
+  nodes[no_of_count++] = tree->value;
+  no_of_count = store_nodes(tree->right, nodes, no_of_count);
+  return no_of_count;
 }
+
+Tree_ptr balance_by_creating_new_tree(Tree_ptr tree) {
+  int nodes[100];
+  int nodes_count = store_nodes(tree,nodes,0);
+  return build_balanced_tree(nodes, 0, nodes_count - 1);
+};
+
+
