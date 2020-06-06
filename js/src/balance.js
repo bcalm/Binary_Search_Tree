@@ -1,5 +1,6 @@
 const {visitInOrder} = require('./traversal');
 const {rotate} = require('./rotate');
+const {insert} = require('./insert');
 
 const calcHeight = function (tree) {
   if (!tree) return 0;
@@ -44,4 +45,29 @@ const balance = function (tree) {
   return tree;
 };
 
-module.exports = {balance};
+const buildBalancedTree = function (nodes, start, end) {
+  if (start > end) {
+    return null;
+  }
+  const mid = Math.floor((start + end) / 2);
+  const node = {value: nodes[mid]};
+  node.left = buildBalancedTree(nodes, start, mid - 1);
+  node.right = buildBalancedTree(nodes, mid + 1, end);
+  return node;
+};
+
+const balanceByCreatingNewTree = function (tree) {
+  const nodes = [];
+  visitInOrder(tree, nodes.push.bind(nodes));
+  return buildBalancedTree(nodes, 0, nodes.length - 1);
+};
+
+// const main = function () {
+//   const values = [10, 5, 1, 8, 9, 20];
+//   const tree = values.reduce(insert, null);
+//   const newTree = balanceByCreatingNewTree(tree);
+//   console.log(newTree);
+// };
+
+// main();
+module.exports = {balance, balanceByCreatingNewTree};
