@@ -145,8 +145,52 @@ Boolean is_balanced(Tree_ptr tree){
   if(tree==NULL) return True;
   int left_height = calc_height(tree->left);
   int right_height = calc_height(tree->right);
-  return abs(left_height - right_height) <= 1;
+  return abs(left_height - right_height) <= 1 && is_balanced(tree->left) && is_balanced(tree->right);
 }
+
+Tree_ptr balance_tree(int node_to_be_root, Tree_ptr tree) {
+  if (tree->value == node_to_be_root) {
+    return tree;
+  }
+  if (tree->left && tree->left->value == node_to_be_root) {
+    return rotate(tree, tree->left->value);
+  }
+  if (tree->right && tree->right->value == node_to_be_root) {
+    return rotate(tree, tree->right->value);
+  }
+  if (node_to_be_root < tree->value) {
+    tree->left = balance_tree(node_to_be_root, tree->left);
+  } else {
+    tree->right = balance_tree(node_to_be_root, tree->right);
+  }
+  return balance_tree(node_to_be_root, tree);
+};
+
+int store_nodes(Tree_ptr tree, Int_ptr nodes, int no_of_nodes){
+  if (tree == NULL)
+  {
+    return no_of_nodes;
+  }
+  no_of_nodes = store_nodes(tree->left, nodes, no_of_nodes);
+  nodes[no_of_nodes++] = tree->value;
+  no_of_nodes = store_nodes(tree->right, nodes, no_of_nodes);
+  return no_of_nodes;
+}
+
+
+Tree_ptr balance(Tree_ptr tree) {
+  if (is_balanced(tree)) {
+    return tree;
+  }
+  int nodes[100];
+  int no_of_nodes = store_nodes(tree, nodes, 0);
+  int node_to_be_root = nodes[(int)floor(no_of_nodes / 2.0) - 1];
+  tree = balance_tree(node_to_be_root, tree);
+  tree->left = balance(tree->left);
+  tree->right = balance(tree->right);
+  return tree;
+};
+
 
 Tree_ptr build_balanced_tree(Int_ptr nodes,int start,int end) {
   if (start > end) {
@@ -160,16 +204,6 @@ Tree_ptr build_balanced_tree(Int_ptr nodes,int start,int end) {
   return tree;
 };
 
-int store_nodes(Tree_ptr tree, Int_ptr nodes, int no_of_count){
-  if (tree == NULL)
-  {
-    return no_of_count;
-  }
-  no_of_count = store_nodes(tree->left, nodes, no_of_count);
-  nodes[no_of_count++] = tree->value;
-  no_of_count = store_nodes(tree->right, nodes, no_of_count);
-  return no_of_count;
-}
 
 Tree_ptr balance_by_creating_new_tree(Tree_ptr tree) {
   int nodes[100];

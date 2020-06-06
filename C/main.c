@@ -13,7 +13,7 @@ int main(void)
   int values[] = {4, 3, 5, 2, 6, 1, 7};
   Tree_ptr tree = reduce(NULL, values, 7);
   print_pre_order(tree);
-  tree = balance_by_creating_new_tree(tree);
+  tree = balance(tree);
   print_pre_order(tree);
   return 0;
 }
