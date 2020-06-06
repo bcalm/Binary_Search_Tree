@@ -211,4 +211,22 @@ Tree_ptr balance_by_creating_new_tree(Tree_ptr tree) {
   return build_balanced_tree(nodes, 0, nodes_count - 1);
 };
 
-
+Tree_ptr rotate_by_value(Tree_ptr root, int value)
+{
+  Tree_ptr_to_ptr parent = NULL;
+  Tree_ptr_to_ptr node = &root;
+  while (*node && value != (*node)->value)
+  {
+    parent = &(*node);
+    node = value < (*node)->value ? &(*node)->left : &(*node)->right;
+  }
+  if (*node == NULL)
+  {
+    return root;
+  }
+  if (*parent)
+  {
+    *parent = rotate(*parent, (*node)->value);
+  }
+  return root;
+};
