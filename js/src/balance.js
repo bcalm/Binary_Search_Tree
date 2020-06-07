@@ -1,6 +1,5 @@
 const {visitInOrder} = require('./traversal');
-const {rotate} = require('./rotate');
-const {insert} = require('./insert');
+const {rotate, rotateByValue} = require('./rotate');
 
 const calcHeight = function (tree) {
   if (!tree) return 0;
@@ -14,24 +13,6 @@ const isBalanced = function (tree) {
   return Math.abs(leftHeight - rightHeight) <= 1 && isBalanced(tree.left) && isBalanced(tree.right);
 };
 
-const balanceTree = function (nodeToBeRoot, tree) {
-  if (tree.value === nodeToBeRoot) {
-    return tree;
-  }
-  if (tree.left && tree.left.value === nodeToBeRoot) {
-    return rotate(tree, tree.left);
-  }
-  if (tree.right && tree.right.value === nodeToBeRoot) {
-    return rotate(tree, tree.right);
-  }
-  if (nodeToBeRoot < tree.value) {
-    tree.left = balanceTree(nodeToBeRoot, tree.left);
-  } else {
-    tree.right = balanceTree(nodeToBeRoot, tree.right);
-  }
-  return balanceTree(nodeToBeRoot, tree);
-};
-
 const balance = function (tree) {
   if (isBalanced(tree)) {
     return tree;
@@ -39,7 +20,11 @@ const balance = function (tree) {
   const nodes = [];
   visitInOrder(tree, nodes.push.bind(nodes));
   const nodeToBeRoot = nodes[Math.ceil(nodes.length / 2) - 1];
-  tree = balanceTree(nodeToBeRoot, tree);
+
+  while (tree.value !== nodeToBeRoot) {
+    tree = rotateByValue(tree, nodeToBeRoot);
+  }
+
   tree.left = balance(tree.left);
   tree.right = balance(tree.right);
   return tree;

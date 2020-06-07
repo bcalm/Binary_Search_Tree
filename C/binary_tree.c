@@ -123,6 +123,7 @@ Tree_ptr left_rotate(Tree_ptr tree)
 }
 
 Tree_ptr rotate(Tree_ptr tree, int pivot){
+  if(tree == NULL) return tree;
   if(tree->right->value == pivot){
     tree = left_rotate(tree);
   }

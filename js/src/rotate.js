@@ -28,4 +28,30 @@ const rotate = function (tree, pivot) {
   return tree;
 };
 
-module.exports = {rotate};
+const rotateByValue = function (tree, value) {
+  let grandParent = null;
+  let parent = null;
+  let current = tree;
+  while (current && current.value !== value) {
+    grandParent = parent;
+    parent = current;
+    current = value < current.value ? current.left : current.right;
+  }
+
+  if (current === null) {
+    return tree;
+  }
+
+  if (grandParent === null) {
+    return rotate(parent, current);
+  }
+
+  if (grandParent.left === parent) {
+    grandParent.left = rotate(parent, current);
+  } else {
+    grandParent.right = rotate(parent, current);
+  }
+  return tree;
+};
+
+module.exports = {rotate, rotateByValue};
