@@ -10,10 +10,10 @@ Tree_ptr reduce(Tree_ptr tree, Int_ptr array, int array_length){
 
 int main(void)
 {
-  int values[] = {10, 20, 15, 25, 5, 8, 1};
+  int values[] = {4, 3, 5, 2, 6, 1, 7};
   Tree_ptr tree = reduce(NULL, values, 7);
   print_pre_order(tree);
-  tree = rotate_by_value(tree, 8);
+  tree = balance(tree);
   print_pre_order(tree);
   return 0;
 }
