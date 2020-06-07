@@ -1,3 +1,5 @@
+const {insert} = require('./insert');
+
 const leftRotate = function (tree) {
   if (!tree || !tree.right) {
     return tree;

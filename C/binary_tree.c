@@ -101,33 +101,32 @@ Tree_ptr delete_node(Tree_ptr tree, int value)
   }
   return tree;
 }
-
-Tree_ptr right_rotate(Tree_ptr tree)
-{
-  Tree_ptr root = tree;
-  Tree_ptr pivot = root->left;
-  if(pivot == NULL) return tree;
-  root->left = pivot->right;
-  pivot->right = root;
+Tree_ptr left_rotate(Tree_ptr tree) {
+  if (!tree || !tree->right) {
+    return tree;
+  }
+  Tree_ptr pivot = tree->right;
+  tree->right = pivot->left;
+  pivot->left = tree;
   return pivot;
-}
+};
 
-Tree_ptr left_rotate(Tree_ptr tree)
-{
-  Tree_ptr root = tree;
-  Tree_ptr pivot = root->right;
-  if(pivot == NULL) return tree;
-  root->right = pivot->left;
-  pivot->left = root;
+Tree_ptr right_rotate(Tree_ptr tree) {
+  if (!tree || !tree->left) {
+    return tree;
+  }
+  Tree_ptr pivot = tree->left;
+  tree->left = pivot->right;
+  pivot->right = tree;
   return pivot;
-}
+};
 
-Tree_ptr rotate(Tree_ptr tree, int pivot){
+Tree_ptr rotate(Tree_ptr tree, Tree_ptr pivot){
   if(tree == NULL) return tree;
-  if(tree->right->value == pivot){
+  if(tree->right == pivot){
     tree = left_rotate(tree);
   }
-  if(tree->left->value == pivot){
+  if(tree->left == pivot){
     tree = right_rotate(tree);
   }
   return tree;
@@ -196,10 +195,11 @@ Tree_ptr balance_by_creating_new_tree(Tree_ptr tree) {
   return build_balanced_tree(nodes, 0, nodes_count - 1);
 };
 
-Tree_ptr rotate_by_value(Tree_ptr root, int value)
+Tree_ptr rotate_by_value(Tree_ptr tree, int value)
 {
+ 
   Tree_ptr_to_ptr parent = NULL;
-  Tree_ptr_to_ptr node = &root;
+  Tree_ptr_to_ptr node = &tree;
   while (*node && value != (*node)->value)
   {
     parent = &(*node);
@@ -207,11 +207,11 @@ Tree_ptr rotate_by_value(Tree_ptr root, int value)
   }
   if (*node == NULL)
   {
-    return root;
+    return tree;
   }
   if (*parent)
   {
-    *parent = rotate(*parent, (*node)->value);
+    *parent = rotate(*parent, (*node));
   }
-  return root;
+  return tree;
 };

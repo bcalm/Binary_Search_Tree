@@ -28,7 +28,7 @@ void print_in_order(Tree_ptr);
 void print_pre_order(Tree_ptr);
 void print_post_order(Tree_ptr);
 Tree_ptr find_min(Tree_ptr);
-Tree_ptr rotate(Tree_ptr, int);
+Tree_ptr rotate(Tree_ptr, Tree_ptr);
 Tree_ptr balance_by_creating_new_tree(Tree_ptr);
 Tree_ptr balance(Tree_ptr);
 Tree_ptr rotate_by_value(Tree_ptr , int );

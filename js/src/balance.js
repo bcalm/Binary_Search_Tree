@@ -1,5 +1,5 @@
 const {visitInOrder} = require('./traversal');
-const {rotate, rotateByValue} = require('./rotate');
+const {rotateByValue} = require('./rotate');
 
 const calcHeight = function (tree) {
   if (!tree) return 0;
